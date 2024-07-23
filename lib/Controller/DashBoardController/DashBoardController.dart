@@ -784,7 +784,7 @@ print('Sucess'+value.message);
   setURL() async {
     String? getUrl = await HelperFunctions.getHostDSP();
     //  Url.queryApi = 'http://91.203.133.224:81/api/';
-    Url.queryApi = 'http://${getUrl.toString()}/api/';
+    Url.queryApi = '${getUrl.toString()}/api/';
   }
 
   int checkContent(FeedsModalData2 feedDatas) {

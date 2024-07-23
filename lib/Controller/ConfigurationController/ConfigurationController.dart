@@ -314,7 +314,7 @@ String brandview='';
     // log("getUrl $getUrl");
     // log("userNamePM ${ConstantValues.userNamePM}");
 // Url.queryApi = 'http://91.203.133.224:81/api/';
-    Url.queryApi = 'http://${getUrl.toString()}/api/';
+    Url.queryApi = '${getUrl.toString()}/api/';
     geturlview=getUrl.toString();
     String? deviceID = await HelperFunctions.getDeviceIDSharedPreference();
     deviceIDview=deviceID.toString();

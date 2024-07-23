@@ -43,7 +43,7 @@ static  String? currentstatus;
 
   Container statusRespPage(BuildContext context, ThemeData theme) {
     return Container(
-      width: Screens.width(context),
+      width: Screens.width(context)*0.5,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -87,7 +87,7 @@ static  String? currentstatus;
                 )), 
                 
                 Container(
-                  width: Screens.width(context)*0.8,
+                  width: Screens.width(context)*0.4,
                   child: Divider(color: theme.primaryColor,)),
                 SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
@@ -96,10 +96,10 @@ static  String? currentstatus;
                
                 Container(
                   // color: Colors.amber,
-                  // width: Screens.width(context)*0.6,
+                  width: Screens.width(context)*0.45,
                   padding: EdgeInsets.only(
-                    left: Screens.width(context)*0.07,
-                    right: Screens.width(context)*0.05,
+                    left: Screens.width(context)*0.01,
+                    right: Screens.width(context)*0.01,
                     ),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +169,7 @@ static  String? currentstatus;
                       Container(
                         alignment: Alignment.centerLeft,
 
-                        //     width: Screens.width(context) * 0.4,
+                            width: Screens.width(context) * 0.2,
                         child: Text(
                           "Store",
                           style: theme.textTheme.bodyText2
@@ -179,7 +179,7 @@ static  String? currentstatus;
                       Container(
                         alignment: Alignment.centerRight,
 
-                           width: Screens.width(context) * 0.4,
+                           width: Screens.width(context) * 0.2,
                         child: Text(
                           "Current Status",
                           style: theme.textTheme.bodyText2
@@ -194,7 +194,7 @@ static  String? currentstatus;
                       Container(
                         alignment: Alignment.centerLeft,
 
-                           width: Screens.width(context) * 0.4,
+                           width: Screens.width(context) * 0.2,
                         child: Text(
                             "${Store}",
                             style: theme.textTheme.bodyText2?.copyWith(
@@ -206,7 +206,7 @@ static  String? currentstatus;
                       Container(
                         alignment: Alignment.centerRight,
 
-                           width: Screens.width(context) * 0.4,
+                           width: Screens.width(context) * 0.2,
                         child: Text(
                             
                                  "${currentstatus}",
@@ -226,7 +226,7 @@ static  String? currentstatus;
                   height: Screens.bodyheight(context) * 0.01,
                 ),
                 Container(
-                  width: Screens.width(context)*0.8,
+                  width: Screens.width(context)*0.4,
                   child: Divider(color: theme.primaryColor,)),
                  
                     
@@ -243,7 +243,7 @@ static  String? currentstatus;
                   height: Screens.bodyheight(context) * 0.01,
                 ),
                  Container(
-                  width: Screens.width(context)*0.8,
+                  width: Screens.width(context)*0.4,
                   child: Divider(height: 10,color: theme.primaryColor,)),
                    SizedBox(
                   height: Screens.bodyheight(context) * 0.01,
@@ -253,7 +253,7 @@ static  String? currentstatus;
                   children: [
 
                      Container(
-                        width: Screens.width(context) * 0.47,
+                        width: Screens.width(context) * 0.24,
                         height: Screens.bodyheight(context) * 0.06,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -287,7 +287,7 @@ static  String? currentstatus;
                             )),
                       ),
                       Container(
-                        width: Screens.width(context) * 0.47,
+                        width: Screens.width(context) * 0.255,
                         height: Screens.bodyheight(context) * 0.06,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -303,6 +303,7 @@ static  String? currentstatus;
                        context
                             .read<OrderNewController>()
                             .isAnother = true;
+                             FocusScope.of(context).unfocus();
                         Navigator.pop(context);
                        
                       },

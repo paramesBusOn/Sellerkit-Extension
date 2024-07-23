@@ -17,6 +17,8 @@ import 'package:sellerkit/Pages/LeaveRequest/Screen/LeaveReqTab.dart';
 import 'package:sellerkit/Pages/Login/Screen/LoginScreen.dart';
 import 'package:sellerkit/Pages/OnBoarding/OnBoardingScreen.dart';
 import 'package:sellerkit/Pages/OpenLead/Screen/FilterOpenLeadPage.dart';
+import 'package:sellerkit/Pages/OrderBooking/MainPage.dart';
+import 'package:sellerkit/Pages/SalesInvoice/MainPageSales.dart';
 import 'package:sellerkit/Pages/SpecialPriceReq/Screens/TabScreen.dart';
 import 'package:sellerkit/Pages/SpecialPriceReq/newpricereq.dart';
 import 'package:sellerkit/Widgets/qrpage.dart';
@@ -48,7 +50,6 @@ import '../Pages/Followup/Screens/FollowUpNew.dart';
 import '../Pages/Followup/Screens/FollowUpScreen.dart';
 import '../Pages/Followup/Screens/FollowUpTabScreen.dart';
 import '../Pages/ForgotPassword/Screens/ForgotPassword.dart';
-import '../Pages/ForgotPassword/widgets/ConfirmPassword.dart';
 import '../Pages/Reports/Reports/screens/ReportsPage.dart';
 import '../Pages/TargetPage/Screen/Target.dart';
 import '../Pages/Leads/Screens/LeadSuccessPage.dart';
@@ -62,7 +63,6 @@ import '../Pages/OpenLead/Screen/OpenLeadPage.dart';
 // import '../Pages/Orders/Screens/LeadSuccessPage.dart';
 import '../Pages/OrderBooking/NewOrder.dart';
 import '../Pages/OrderBooking/Screens/OrderSuccessPage.dart';
-import '../Pages/OrderBooking/Screens/TabOrders.dart';
 import '../Pages/PriceAvailability/Screen/ViewAllPriceListPage.dart';
 import '../Pages/PriceAvailability/Screen/PriceListFstPage.dart';
 import '../Pages/Profile/Screen/Newprofile.dart';
@@ -174,7 +174,7 @@ class Routes {
 // orders
     GetPage<dynamic>(
         name: ConstantRoutes.ordertab,
-        page: () => OrdersTabPage(), //LeadBook(),
+        page: () => OrderMainpage(), //LeadBook(),
         transition: Transition.fade,
         transitionDuration: Duration(seconds: 1)),
     GetPage<dynamic>(
@@ -192,6 +192,13 @@ class Routes {
         page: () => OrderBookNew(), //LeadBook(),
         transition: Transition.fade,
         transitionDuration: Duration(seconds: 1)),
+
+        //Sales Invoice
+        GetPage<dynamic>(
+        name: ConstantRoutes.salesinvoive,
+        page: () => SalesMainpage(), //LeadBook(),
+        transition: Transition.fade,
+        transitionDuration: Duration(seconds:1)),
     // performance
 
     GetPage<dynamic>(

@@ -78,7 +78,7 @@ class DownLoadController extends ChangeNotifier {
     String? getUrl = await HelperFunctions.getHostDSP();
     // log("getUrl $getUrl");
     ConstantValues.userNamePM = await HelperFunctions.getUserName();
-    Url.queryApi = 'http://${getUrl.toString()}/api/';
+    Url.queryApi = '${getUrl.toString()}/api/';
   }
 
   ItemMasterApiNew itemMasterApiNew = ItemMasterApiNew();

@@ -455,8 +455,11 @@ Container drawer3(BuildContext context) {
                               left: Screens.width(context) * 0.02,
                             ),
                             child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
+                                //  SizedBox(
+                                //   width: Screens.width(context) * 0.02,
+                                // ),
                                 InkWell(
                                   onTap: () {
                                     if (MenuAuthDetail.Leads == "Y") {
@@ -640,6 +643,41 @@ Container drawer3(BuildContext context) {
                                   icon: Icons.qr_code_2_outlined,
                                   iconColor: Colors.grey,
                                   title: 'Scan QrCode',
+                                ),
+                                SizedBox(
+                                  width: Screens.width(context) * 0.02,
+                                ),
+                                IconContainer(
+                                  theme: theme,
+                                  callback: () {
+                                    if (MenuAuthDetail.Leads == "Y") {
+                                      //ch
+                                      Navigator.pop(context);
+                                      Get.offAllNamed(ConstantRoutes.salesinvoive);
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                4))),
+                                                contentPadding:
+                                                    EdgeInsets.all(0),
+                                                insetPadding: EdgeInsets.all(
+                                                    Screens.bodyheight(
+                                                            context) *
+                                                        0.02),
+                                                content: settings(context));
+                                          });
+                                    }
+                                  },
+                                  icon: Icons.inventory,
+                                  iconColor: theme.primaryColor,
+                                  title: 'Sales Invoice',
                                 ),
                               ],
                             ),
@@ -897,7 +935,8 @@ Container drawer3(BuildContext context) {
                                     // if (MenuAuthDetail.OfferZone == "Y") {
                                     //ch ! replace =
                                     Navigator.pop(context);
-                                    Get.offAllNamed(ConstantRoutes.specialpricereq);
+                                    Get.offAllNamed(
+                                        ConstantRoutes.specialpricereq);
                                     // } else {
                                     //   showDialog(
                                     //       context: context,
@@ -1626,66 +1665,29 @@ Container drawer3(BuildContext context) {
                                   width: Screens.width(context) * 0.25,
                                   height: Screens.fullHeight(context) * 0.11,
                                   decoration: BoxDecoration(
-                                      //   color: Colors.red[200],
+                                      // color: Colors.red[200],
                                       borderRadius: BorderRadius.circular(8)),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        width: Screens.width(context) * 0.26,
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                                width: Screens.width(context) *
-                                                    0.108,
-                                                padding: EdgeInsets.all(5),
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                    color: theme.primaryColor
-                                                        .withOpacity(
-                                                            0.2), //,Colors.amber,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Image.asset(
-                                                  "Assets/archery2.png",
-                                                  fit: BoxFit.contain,
-                                                  color: theme.primaryColor,
-                                                )
-                                                // IconButton(
-                                                //   alignment: Alignment.bottomCenter,
-                                                //   onPressed:  () {
-                                                //               if (MenuAuthDetail.Walkins == "Y") {
-                                                //                 Navigator.pop(context);
-                                                //                 Get.toNamed(ConstantRoutes.walkins);
-                                                //               } else {
-                                                //                 showDialog(
-                                                //                     context: context,
-                                                //                     barrierDismissible: true,
-                                                //                     builder: (BuildContext context) {
-                                                //                       return AlertDialog(
-                                                //                           shape: RoundedRectangleBorder(
-                                                //                               borderRadius:
-                                                //                                   BorderRadius.all(
-                                                //                                       Radius.circular(4))),
-                                                //                           contentPadding: EdgeInsets.all(0),
-                                                //                           insetPadding: EdgeInsets.all(
-                                                //                               Screens.bodyheight(context) *
-                                                //                                   0.02),
-                                                //                           content: settings(context));
-                                                //                     });
-                                                //               }
-                                                //             },
-                                                //  icon: FaIcon(FontAwesomeIcons.users),// Icons.home,
-                                                //   color: theme.primaryColor,//Colors.red,//Colors.white,
-                                                //   iconSize: Screens.padingHeight(context) * 0.03,
-                                                // ),
-                                                ),
-                                          ],
-                                        ),
-                                      ),
+                                          width: Screens.width(context) * 0.05,
+                                          padding: EdgeInsets.all(5),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: theme.primaryColor
+                                                  .withOpacity(
+                                                      0.2), //,Colors.amber,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Center(
+                                            child: Image.asset(
+                                              "Assets/archery2.png",
+                                              fit: BoxFit.fill,
+                                              color: theme.primaryColor,
+                                            ),
+                                          )),
                                       Container(
                                         width: Screens.width(context) * 0.26,
                                         alignment: Alignment.center,
@@ -1780,7 +1782,7 @@ Container drawer3(BuildContext context) {
                       ),
                     ),
                   ),
-SizedBox(
+                  SizedBox(
                     height: Screens.fullHeight(context) * 0.01,
                   ),
                   Card(
@@ -1876,14 +1878,9 @@ SizedBox(
                                   ?.copyWith(color: theme.primaryColor),
                             ),
                           ),
-                          
                           SizedBox(
                             height: Screens.fullHeight(context) * 0.01,
                           ),
-
-
-
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

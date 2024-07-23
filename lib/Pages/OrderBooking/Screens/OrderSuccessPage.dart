@@ -49,7 +49,7 @@ class OrderSuccessPageState extends State<OrderSuccessPage> {
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       print("object");
-      Get.offAllNamed(ConstantRoutes.ordertab);
+      Get.offAllNamed(ConstantRoutes.dashboard);
       return Future.value(true);
     } else {
       return Future.value(true);
@@ -308,7 +308,7 @@ class OrderSuccessPageState extends State<OrderSuccessPage> {
                                 height: Screens.bodyheight(context) * 0.06,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Get.offAllNamed(ConstantRoutes.ordertab);
+                                    Get.offAllNamed(ConstantRoutes.dashboard);
                                   },
                                   child: Text("Done"),
                                   // style: Elev,

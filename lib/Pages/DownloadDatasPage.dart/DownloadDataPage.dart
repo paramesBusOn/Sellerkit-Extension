@@ -23,11 +23,11 @@ class _DownloadPageState extends State<DownloadPage>
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        context.read<DownLoadController>().setURL();
+      context.read<DownLoadController>().setURL();
       // context.read<DownLoadController>().createDB().then((value) {
       context.read<DownLoadController>().getDefaultValues().then((value) {
         context.read<DownLoadController>().callApiNew(context);
-         context.read<NotificationContoller>().getUnSeenNotify();
+        context.read<NotificationContoller>().getUnSeenNotify();
       });
       // });
     });
@@ -44,58 +44,54 @@ class _DownloadPageState extends State<DownloadPage>
         padding: EdgeInsets.symmetric(
             horizontal: Screens.width(context) * 0.03,
             vertical: Screens.bodyheight(context) * 0.02),
-        child: 
-        // context.watch<DownLoadController>().exception == true &&
-        //         context.watch<DownLoadController>().getErrorMsg != ''
-        //     ? Center(
-        //         child: Text('${context.watch<DownLoadController>().errorMsg}'),
-        //       )
-        //     : 
-            Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                   Container(
-                    alignment: Alignment.center,
-                    width: Screens.width(context),
-                    //color: Colors.red,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Screens.width(context) * 0.03),
-                      child: Text("Loading Initial Data Please wait..!!",
-                      style: theme.textTheme.headline6,
-                      )
-                      ),
-                  InkWell(
-                    onTap: () {
-                      // HelperFunctions.clearCheckedOnBoardSharedPref();
-                      // HelperFunctions.clearUserLoggedInSharedPref();
-                    },
-                    child: Lottie.asset('Assets/20479-settings.json',
-                        animate: true,
-                        repeat: true,
-                        height: Screens.padingHeight(context) * 0.2,
-                        width: Screens.width(context) * 0.2),
-                  ),
-                  Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Screens.width(context) * 0.3),
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.white,
-                      )),
-                      SizedBox(
-                        height: Screens.padingHeight(context)*0.01,
-                      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                alignment: Alignment.center,
+                width: Screens.width(context),
+                //color: Colors.red,
+                padding: EdgeInsets.symmetric(
+                    horizontal: Screens.width(context) * 0.03),
+                child: Text(
+                  "Loading Initial Data Please wait..!!",
+                  style: theme.textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
+                )),
+                SizedBox(height: Screens.bodyheight(context)*0.02,),
+            InkWell(
+              onTap: () {
+                // HelperFunctions.clearCheckedOnBoardSharedPref();
+                // HelperFunctions.clearUserLoggedInSharedPref();
+              },
+              child: Lottie.asset('Assets/20479-settings.json',
+                  animate: true,
+                  repeat: true,
+                  height: Screens.padingHeight(context) * 0.2,
+                  width: Screens.width(context) * 0.2),
+            ),
+                SizedBox(height: Screens.bodyheight(context)*0.02,),
 
-                      //  Container(
-                      
-                      // child: Text("Loading..${context.watch<DownLoadController>().loadingApi}")),
-                      // Container(
-                      
-                      // child: Text("storeid..${ConstantValues.storeid}")),
-                      // Container(
-                      
-                      // child: Text("storecode..${ConstantValues.Storecode}"))
-                ],
-              ),
+            Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Screens.width(context) * 0.3),
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.white,
+                )),
+            SizedBox(
+              height: Screens.padingHeight(context) * 0.01,
+            ),
+
+            //  Container(
+
+            // child: Text("Loading..${context.watch<DownLoadController>().loadingApi}")),
+            // Container(
+
+            // child: Text("storeid..${ConstantValues.storeid}")),
+            // Container(
+
+            // child: Text("storecode..${ConstantValues.Storecode}"))
+          ],
+        ),
       ),
     ));
   }

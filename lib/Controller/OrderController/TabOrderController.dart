@@ -171,6 +171,7 @@ class OrderTabController extends ChangeNotifier {
   }
 
   clearAllListData() {
+    clearfilterval();
     datagotByApi = false;
     GetAllData.clear();
     iscalltrue = false;
@@ -212,6 +213,7 @@ class OrderTabController extends ChangeNotifier {
     leadClosedAllData.clear();
     mycontroller[5].clear();
     mycontroller[10].clear();
+    // getdbmodel();
     notifyListeners();
   }
 

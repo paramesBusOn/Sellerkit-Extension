@@ -12,6 +12,9 @@ import 'package:sellerkit/Models/PostQueryModel/EnquiriesModel/levelofinterestMo
 import 'package:sellerkit/Models/PostQueryModel/OrdersCheckListModel/OrdersSavePostModel/paymodemodel.dart';
 import 'package:sellerkit/Models/PostQueryModel/OrdersCheckListModel/couponModel.dart';
 import 'package:sellerkit/Pages/OrderBooking/Widgets/paymenttermdialog.dart';
+import 'package:sellerkit/Pages/OrderBooking/Widgets/pos-widget/AlertBox.dart';
+import 'package:sellerkit/Pages/OrderBooking/Widgets/pos-widget/CustomerDetails.dart';
+import 'package:sellerkit/Pages/OrderBooking/Widgets/pos-widget/newwidget.dart';
 import 'package:sellerkit/Pages/OrderBooking/Widgets/shorefdialog.dart';
 import 'package:sellerkit/Services/PostQueryApi/OrdersApi/couponApi.dart';
 import 'package:sellerkit/Services/PostQueryApi/OrdersApi/paymentmode.dart';
@@ -70,7 +73,7 @@ class OrderNewController extends ChangeNotifier {
   int pageChanged = 0;
   PageController pageController = PageController(initialPage: 0);
   init() async {
-    clearAllData();
+   await clearAllData();
     getdataFromDb();
     getEnqRefferes();
     await stateApicallfromDB();
@@ -777,6 +780,38 @@ bool? payupdate=false;
 //  checkscannedcode(code);
     notifyListeners();
   }
+
+  scanneddatagetitem(BuildContext context) {
+    // log("code:::::"+code.toString());
+
+    // notifyListeners();
+
+    // Get.back();
+// Navigator.pop(context);
+    // notifyListeners();
+    if(mycontroller[49].text.isNotEmpty){
+ for (int ij = 0; ij < allProductDetails.length; ij++) {
+      if (allProductDetails[ij].itemCode!.toLowerCase() == mycontroller[49].text.toLowerCase()) {
+        itemAlreadyscanned = true;
+        indexscanning = ij;
+        notifyListeners();
+        break;
+      }
+    }
+    if (itemAlreadyscanned == true) {
+      resetItems(indexscanning!);
+      showBottomSheetInsert(context, indexscanning!);
+      notifyListeners();
+    } else {
+      showtoastforscanning();
+      notifyListeners();
+    }
+    }
+   
+
+//  checkscannedcode(code);
+    notifyListeners();
+  }
   // checkscannedcode(String code){
   //    log("code:::::"+code.toString());
 
@@ -833,30 +868,25 @@ bool? payupdate=false;
 
     if (formkey[1].currentState!.validate()) {
       bool itemAlreadyAdded = false;
+      int? index;
 
       for (int i = 0; i < productDetails.length; i++) {
         if (productDetails[i].ItemCode == selectedItemCode) {
           itemAlreadyAdded = true;
+          index=i;
           break;
         }
       }
       if (itemAlreadyAdded) {
         showItemList = false;
-        mycontroller[12].clear();
+         addQtyProduct(context,index!);
+        mycontroller[49].clear();
         Navigator.pop(context);
         isUpdateClicked = false;
         notifyListeners();
-        showtoastforall();
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('Item Already Added..!!'),
-        //     backgroundColor: Colors.red,
-        //     elevation: 10,
-        //     behavior: SnackBarBehavior.floating,
-        //     margin: EdgeInsets.all(5),
-        //     dismissDirection: DismissDirection.up,
-        //   ),
-        // );
+       
+        // showtoastforall();
+        notifyListeners();
       } else {
         productDetails.add(DocumentLines(
           id: 0,
@@ -890,9 +920,10 @@ bool? payupdate=false;
                   partname: selectedapartname==null||selectedapartname.isEmpty?
                   null:selectedapartname,
         ));
-        showItemList = false;
-        mycontroller[12].clear();
         Navigator.pop(context);
+        showItemList = false;
+        mycontroller[49].clear();
+        
 
         isUpdateClicked = false;
         // showComplementry(context);
@@ -1046,6 +1077,24 @@ bool? payupdate=false;
   }
 
   List<String> selectedassignto = [];
+  addQtyProduct(BuildContext context, int i) {
+    if (formkey[1].currentState!.validate()) {
+      productDetails[i].Quantity =productDetails[i].Quantity! + quantity!;
+      productDetails[i].Price = unitPrice;
+      productDetails[i].LineTotal = total;
+      productDetails[i].partcode=selectedapartcode == null || selectedapartcode.isEmpty
+                  ? productDetails[i].partcode
+                  : selectedapartcode;
+                  productDetails[i].partname=selectedapartname==null||selectedapartname.isEmpty?
+                  productDetails[i].partname:selectedapartname;
+                  productDetails[i].couponcode=mycontroller[36].text == null || mycontroller[36].text.isEmpty
+                  ? productDetails[i].couponcode
+                  : mycontroller[36].text;
+      // showItemList = false;
+      // Navigator.pop(context);
+      // isUpdateClicked = false;
+    }
+  }
   updateProductDetails(BuildContext context, int i) {
     if (formkey[1].currentState!.validate()) {
       productDetails[i].Quantity = quantity;
@@ -1065,7 +1114,7 @@ bool? payupdate=false;
     }
   }
 
-  List<GetCustomerData>? customerdetails;
+  List<GetCustomerData> customerdetails=[];
   resetItems(int i) {
     unitPrice = 0.00;
     quantity = 0;
@@ -1119,6 +1168,7 @@ bool? payupdate=false;
     //
     //fs
     customerapicLoading = true;
+    customerdetails.clear();
     notifyListeners();
     GetCutomerDetailsApi.getData(
             mycontroller[0].text, "${ConstantValues.slpcode}")
@@ -1129,8 +1179,8 @@ bool? payupdate=false;
         if (value.itemdata != null) {
           if (value.itemdata!.customerdetails!.isNotEmpty &&
               value.itemdata!.customerdetails != null) {
-            customerdetails = value.itemdata!.customerdetails;
-            mapValues(value.itemdata!.customerdetails![0]);
+            customerdetails = value.itemdata!.customerdetails!;
+            mapValues(value.itemdata!.customerdetails![0],context);
             oldcutomer = true;
             notifyListeners();
             // if (
@@ -1305,11 +1355,13 @@ bool? payupdate=false;
           } else {
             oldcutomer = false;
             customerapicLoading = false;
+            Addnewcustomer(context);
             notifyListeners();
           }
         } else if (value.itemdata == null) {
           oldcutomer = false;
           customerapicLoading = false;
+Addnewcustomer(context);
           notifyListeners();
         }
       } else if (value.stcode! >= 400 && value.stcode! <= 410) {
@@ -1324,7 +1376,35 @@ bool? payupdate=false;
       }
     });
   }
-
+Addnewcustomer(BuildContext context){
+  showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            
+                                          return StatefulBuilder(
+                                            builder: (context,st) {
+                                              return AlertDialog(
+                                                  contentPadding: EdgeInsets.all(0),
+                                                  insetPadding:EdgeInsets.all(0), 
+                                                  content: AlertBox(
+                                                    payMent: 'New Customer',
+                                                    widget: newcust(),
+                                                    buttonName: "Save",
+                                                    callback: () {
+                                                      st(() {
+                                                      firstPageNextBtn(context);
+                                                      });
+                                              
+                                                      print('AddNew Customer');
+                                                    },
+                                                  ));
+                                            }
+                                          );
+                                       
+                          });
+}
+  FocusNode focusNode4 = FocusNode();
   FocusNode focusNode2 = FocusNode();
   void alertDialogOpenLeadOREnq2(BuildContext context, String typeOfDataCus) {
     showDialog<dynamic>(
@@ -1336,7 +1416,9 @@ bool? payupdate=false;
         }).then((value) {
       if (isAnother == false) {
         FocusScope.of(context).requestFocus(focusNode2);
-      } else {}
+      } else if(isAnother == true) {
+        FocusScope.of(context).unfocus();
+      }
     });
   }
   // callApi() {
@@ -1469,6 +1551,7 @@ bool? payupdate=false;
 
   clearnum() {
     value3 = false;
+    customerdetails.clear();
     mycontroller[19].clear();
     mycontroller[20].clear();
     mycontroller[21].clear();
@@ -1594,8 +1677,32 @@ bool? payupdate=false;
   }
 
   static List<String> dataenq = [];
-  mapValues(GetCustomerData itemdata) {
+  mapValues(GetCustomerData itemdata,BuildContext context) {
     // mycontroller[0].text = itemdata[0].CardCode!;
+     mycontroller[19].text =itemdata.del_Address1== null||itemdata.del_Address1!.isEmpty
+  ?""
+  :itemdata.del_Address1.toString();
+  mycontroller[20].text =itemdata.del_Address2== null||itemdata.del_Address2!.isEmpty
+  ?""
+  :itemdata.del_Address2.toString();
+  mycontroller[21].text=itemdata.del_Area== null||itemdata.del_Area!.isEmpty
+  ?""
+  :itemdata.del_Area.toString();
+  mycontroller[22].text=itemdata.del_city== null||itemdata.del_city!.isEmpty
+  ?""
+  :itemdata.del_city.toString();
+  mycontroller[23].text=itemdata.del_pincode== null||itemdata.del_pincode!.isEmpty
+  ?""
+  :itemdata.del_pincode.toString();
+  methidstate2(itemdata.del_state.toString());
+  methidstate(itemdata.State.toString(),context);
+  //  for (int i = 0; i < filterstateData.length; i++) {
+  //       if (filterstateData[i].stateName.toString().toLowerCase() ==
+  //           itemdata.del_state.toString().toLowerCase()) {
+  //          mycontroller[24].text = filterstateData[i].stateName.toString();
+  //       }
+  //     }
+  
     mycontroller[16].text = itemdata.customerName == null ||
             itemdata.customerName!.isEmpty ||
             itemdata.customerName == 'null'
@@ -3323,9 +3430,11 @@ bool? payupdate=false;
     notifyListeners();
   }
 
-  clearAllData() {
+  clearAllData() async{
     log("step1");
+    
     postpaymentdata.clear();
+    customerdetails.clear();
     refpartdata.clear();
     mycontroller[46].clear();
     filterrefpartdata.clear();
@@ -3530,7 +3639,154 @@ files2.clear();
   bool iscomeforupdate = false;
   String? DocDateold = '';
 //save all values tp server
+editcustdetail(BuildContext context){
+  mycontroller[19].text =customerdetails[0].del_Address1== null||customerdetails[0].del_Address1!.isEmpty
+  ?""
+  :customerdetails[0].del_Address1.toString();
+  mycontroller[20].text =customerdetails[0].del_Address2== null||customerdetails[0].del_Address2!.isEmpty
+  ?""
+  :customerdetails[0].del_Address2.toString();
+  mycontroller[21].text=customerdetails[0].del_Area== null||customerdetails[0].del_Area!.isEmpty
+  ?""
+  :customerdetails[0].del_Area.toString();
+  mycontroller[22].text=customerdetails[0].del_city== null||customerdetails[0].del_city!.isEmpty
+  ?""
+  :customerdetails[0].del_city.toString();
+  mycontroller[23].text=customerdetails[0].del_pincode== null||customerdetails[0].del_pincode!.isEmpty
+  ?""
+  :customerdetails[0].del_pincode.toString();
+  
+  mycontroller[1].text=customerdetails[0].contactName== null||customerdetails[0].contactName!.isEmpty
+  ?""
+  :customerdetails[0].contactName.toString();
+  mycontroller[6].text=customerdetails[0].altermobileNo== null||customerdetails[0].altermobileNo!.isEmpty
+  ?""
+  :customerdetails[0].altermobileNo.toString();
+mycontroller[0].text=customerdetails[0].customerCode== null||customerdetails[0].customerCode!.isEmpty
+  ?""
+  :customerdetails[0].customerCode.toString();
+  mycontroller[16].text=customerdetails[0].customerName== null||customerdetails[0].customerName!.isEmpty
+  ?""
+  :customerdetails[0].customerName.toString();
+  mycontroller[2].text=customerdetails[0].Address_Line_1== null||customerdetails[0].Address_Line_1!.isEmpty
+  ?""
+  :customerdetails[0].Address_Line_1.toString();
 
+  mycontroller[3].text=customerdetails[0].Address_Line_2== null||customerdetails[0].Address_Line_2!.isEmpty
+  ?""
+  :customerdetails[0].Address_Line_2.toString();
+  mycontroller[4].text=customerdetails[0].Pincode== null||customerdetails[0].Pincode!.isEmpty
+  ?""
+  :customerdetails[0].Pincode.toString();
+  mycontroller[5].text=customerdetails[0].City== null||customerdetails[0].City!.isEmpty
+  ?""
+  :customerdetails[0].City.toString();
+   mycontroller[17].text=customerdetails[0].area== null||customerdetails[0].area!.isEmpty
+  ?""
+  :customerdetails[0].area.toString();
+   for (int i = 0; i < filterstateData.length; i++) {
+        if (filterstateData[i].stateName.toString().toLowerCase() ==
+            customerdetails[0].State.toString().toLowerCase()) {
+          mycontroller[18].text = filterstateData[i].stateName.toString();
+        }
+      }
+      for (int i = 0; i < filterstateData.length; i++) {
+        if (filterstateData[i].stateName.toString().toLowerCase() ==
+            customerdetails[0].del_state.toString().toLowerCase()) {
+           mycontroller[24].text = filterstateData[i].stateName.toString();
+        }
+      }
+     if(customerdetails[0].cardtype !=null) {
+ for (int i = 0; i < ordertypedata.length; i++) {
+        if (ordertypedata[i].Code == customerdetails[0].cardtype) {
+          valueChosedCusType = ordertypedata[i].Name;
+        }
+      }
+      }
+      if(customerdetails[0].customerGroup !=null){
+isSelectedCusTagcode =customerdetails[0].customerGroup.toString();
+      }
+ Addnewcustomer(context);
+ notifyListeners();
+}
+
+
+savecustdetails(BuildContext context){
+
+  customerdetails.clear();
+  customerdetails.add(GetCustomerData(
+    del_Address1:mycontroller[19].text == null || mycontroller[19].text.isEmpty
+            ? null
+            : mycontroller[19].text,
+    del_Address2:  mycontroller[20].text == null || mycontroller[20].text.isEmpty
+            ? null
+            : mycontroller[20].text,
+   
+    del_Area: mycontroller[21].text == null || mycontroller[21].text.isEmpty
+            ? null
+            : mycontroller[21].text, 
+    del_city: mycontroller[22].text == null || mycontroller[22].text.isEmpty
+            ? null
+            : mycontroller[2].text, 
+    del_country: countrycode2, 
+    del_pincode: mycontroller[23].text == null || mycontroller[23].text.isEmpty
+            ? null
+            : mycontroller[23].text, 
+    del_state: statename2, 
+    
+    cardtype: valueChosedCusType == null || valueChosedCusType!.isEmpty
+        ? null
+        : valueChosedCusType, 
+    
+    contactName: mycontroller[1].text == null || mycontroller[1].text.isEmpty
+            ? null
+            : mycontroller[1].text, 
+    altermobileNo: mycontroller[6].text == null || mycontroller[6].text.isEmpty
+            ? null
+            : mycontroller[6].text, 
+    customerGroup: isSelectedCusTagcode, 
+    
+    area:  mycontroller[17].text == null || mycontroller[17].text.isEmpty
+            ? null
+            : mycontroller[17].text,
+    
+    customerCode:  mycontroller[0].text == null || mycontroller[0].text.isEmpty
+            ? null
+            : mycontroller[0].text,
+   
+    customerName:  mycontroller[16].text == null || mycontroller[16].text.isEmpty
+            ? null
+            : mycontroller[16].text, 
+    
+    
+    Address_Line_1: mycontroller[2].text == null || mycontroller[2].text.isEmpty
+            ? null
+            : mycontroller[2].text, 
+    Address_Line_2: mycontroller[3].text == null || mycontroller[3].text.isEmpty
+            ? null
+            : mycontroller[3].text, 
+    Pincode: mycontroller[4].text == null || mycontroller[4].text.isEmpty
+            ? null
+            : mycontroller[4].text, 
+    City: mycontroller[5].text == null || mycontroller[5].text.isEmpty
+            ? null
+            : mycontroller[5].text, 
+    State: statename, 
+    Country: countrycode, 
+    
+    email: mycontroller[7].text == null || mycontroller[7].text.isEmpty
+            ? null
+            : mycontroller[7].text, 
+    
+    gst: mycontroller[25].text == null || mycontroller[25].text.isEmpty
+            ? null
+            : mycontroller[25].text,  
+  
+    ));
+  
+
+  
+}
   saveToServer(BuildContext context) async {
     await callcustomerapi();
     log("Step----------1");
@@ -3661,7 +3917,7 @@ files2.clear();
     postLead.CardName = mycontroller[16].text; //
     postLead.DocDate = config.currentDate(); //
     postLead.deliveryDate = apiFDate;
-    postLead.paymentDate = apiNdate;
+    postLead.paymentDate = config.currentDate();
     postLead.DocDateold =
         DocDateold!.isEmpty ? config.currentDate() : DocDateold;
     patch.enqid = enqID == null ? 0 : enqID;
@@ -4262,12 +4518,15 @@ files2.clear();
         isText1Correct2 = true;
         notifyListeners();
       } else {
-        if (passed == 0) {
-          FocusScope.of(context).unfocus();
-          pageController.animateToPage(++pageChanged,
-              duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
-          resetValidate();
-        }
+        savecustdetails(context);
+        Navigator.pop(context);
+         FocusScope.of(context).unfocus();
+        // if (passed == 0) {
+        //   FocusScope.of(context).unfocus();
+        //   pageController.animateToPage(++pageChanged,
+        //       duration: Duration(milliseconds: 250), curve: Curves.bounceIn);
+        //   resetValidate();
+        // }
       }
     }
     notifyListeners();
@@ -4287,7 +4546,12 @@ files2.clear();
   bool paymentTerm = false;
   thirPageBtnClicked(BuildContext context) {
     int passed = 0;
-    if (formkey[1].currentState!.validate()) {
+    if(customerdetails.isEmpty){
+     showtoastCust("Enter Customer Details..!!");
+    }else if(mycontroller[13].text.isEmpty||apiFDate==null){
+       showtoastCust("Choose Delivery Date..!!");
+      }else{
+// if (formkey[1].currentState!.validate()) {
       // if (isSelectedpaymentTermsCode == null ||
       //     isSelectedpaymentTermsCode.isEmpty) {
       //   paymentTerm = true;
@@ -4298,9 +4562,11 @@ files2.clear();
         if (passed == 0) {
           // LeadSavePostApi.printData(postLead);
           saveToServer(context);
-        }
+        // }
       // }
     }
+    }
+    
     if (isSelectedenquiryReffers.isEmpty) {
       visibleRefferal = true;
     }
@@ -6344,7 +6610,14 @@ break;
                   ),
                 ));
       }),
-    );
+    ).then((value){
+      if (Navigator.canPop(context)) {
+  Navigator.pop(context);
+} else {
+  // Handle the case where there is no page to pop
+}
+// Navigator.pop(context);
+    });
   }
 
   List<GetAllcouponData> getcoupondata = [];
@@ -6952,7 +7225,16 @@ break;
     "assets/xls.png",
     "assets/img.jpg"
   ];
-
+void showtoastCust(String message) {
+    Fluttertoast.showToast(
+        msg: "$message",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 14.0);
+  }
   void showtoastproduct() {
     Fluttertoast.showToast(
         msg: "Quantity should be greater than 0..!!",
@@ -7421,6 +7703,22 @@ log("paytermtotal:::"+paytermtotal.toString());
     // log("paytermtotal::" + paytermtotal.toString());
     // }
     return config.slpitCurrency22(LineTotal!.toString());
+  }
+
+  getTotalGrossqty() {
+   double paytermQty = 0.0;
+    
+    for (int i = 0; i < productDetails.length; i++) {
+      // log("LineTotal::"+productDetails.length.toString());
+     
+      paytermQty = paytermQty! +
+          productDetails[i].Quantity! ;
+      // log("LineTotal5555::"+LineTotal.toString());
+    }
+    // paytermtotal = paytermtotal! + LineTotal;
+    // log("paytermtotal::" + paytermtotal.toString());
+    // }
+    return config.slpitCurrency22(paytermQty!.toString());
   }
 
   getExiCustomerData(String Customer, String CustomerCode) async {

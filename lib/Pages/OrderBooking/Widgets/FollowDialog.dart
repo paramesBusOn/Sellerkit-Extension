@@ -307,14 +307,14 @@ class _FollowDialogState extends State<FollowDialog> {
 
   Container UpdateFollowup(BuildContext context, ThemeData theme) {
     return Container(
-      width: Screens.width(context),
+      width: Screens.width(context)*0.5,
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                width: Screens.width(context),
+                width: Screens.width(context)*0.5,
                 //  height: Screens.bodyheight(context)*0.5,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
@@ -434,7 +434,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                                         0.06,
                                                     width:
                                                         Screens.width(context) *
-                                                            0.13,
+                                                            0.07,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius.circular(
@@ -514,7 +514,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                                         0.06,
                                                     width:
                                                         Screens.width(context) *
-                                                            0.13,
+                                                            0.07,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius.circular(
@@ -1135,7 +1135,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal:
                                                   Screens.width(context) * 0.015),
-                                          width: Screens.width(context) * 0.4,
+                                          width: Screens.width(context) * 0.3,
                                           height:
                                               Screens.bodyheight(context) * 0.05,
                                           decoration: BoxDecoration(
@@ -1149,7 +1149,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                             children: [
                                               Container(
                                                 width:
-                                                    Screens.width(context) * 0.24,
+                                                    Screens.width(context) * 0.10,
                                                 // color: Colors.red,
                                                 child: Text(
                                                   context
@@ -1328,7 +1328,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                                         0.06,
                                                     width:
                                                         Screens.width(context) *
-                                                            0.13,
+                                                            0.07,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius.circular(
@@ -1408,7 +1408,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                                         0.06,
                                                     width:
                                                         Screens.width(context) *
-                                                            0.13,
+                                                            0.07,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius.circular(
@@ -2020,7 +2020,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal:
                                                   Screens.width(context) * 0.015),
-                                          width: Screens.width(context) * 0.4,
+                                          width: Screens.width(context) * 0.3,
                                           height:
                                               Screens.bodyheight(context) * 0.05,
                                           decoration: BoxDecoration(
@@ -2034,7 +2034,7 @@ class _FollowDialogState extends State<FollowDialog> {
                                             children: [
                                               Container(
                                                 width:
-                                                    Screens.width(context) * 0.24,
+                                                    Screens.width(context) * 0.1,
                                                 // color: Colors.red,
                                                 child: Text(
                                                   context
@@ -2211,7 +2211,7 @@ SizedBox(
 Container callLoadingPage(BuildContext context) {
     return Container(
       // color: Colors.amber,
-        width: Screens.width(context) * 0.9,
+        width: Screens.width(context) * 0.5,
         height: Screens.bodyheight(context) * 0.1,
         padding: EdgeInsets.all(10),
         child: Row(
@@ -2233,7 +2233,7 @@ Container callLoadingPage(BuildContext context) {
   }
   Container CallDialog(BuildContext context, ThemeData theme) {
     return Container(
-      width: Screens.width(context),
+      width: Screens.width(context)*0.5,
       //  height: Screens.bodyheight(context)*0.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -2321,7 +2321,7 @@ Container callLoadingPage(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                          width: Screens.width(context) * 0.35,
+                          width: Screens.width(context) * 0.15,
                           //  height: Screens.padingHeight(context)*0.2,
                           child: ElevatedButton(
                             onPressed: widget.leadOpenAllData!.isDelivered ==
@@ -2413,7 +2413,7 @@ Container callLoadingPage(BuildContext context) {
 
                         //invoice
                         Container(
-                          width: Screens.width(context) * 0.35,
+                          width: Screens.width(context) * 0.15,
                           child: ElevatedButton(
                             onPressed: widget.leadOpenAllData!.isInvoiced ==
                                         1 ||
@@ -2512,7 +2512,7 @@ Container callLoadingPage(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                          width: Screens.width(context) * 0.35,
+                          width: Screens.width(context) * 0.15,
                           child: ElevatedButton(
                             onPressed:
                              (widget.leadOpenAllData!.isDelivered == 0 &&
@@ -2598,7 +2598,7 @@ Container callLoadingPage(BuildContext context) {
 
                         //invoice
                         Container(
-                          width: Screens.width(context) * 0.35,
+                          width: Screens.width(context) * 0.15,
                           child: ElevatedButton(
                             onPressed:
                           (widget.leadOpenAllData!.isDelivered == 0 &&
@@ -2793,7 +2793,7 @@ Container callLoadingPage(BuildContext context) {
 
   Container detailsDialog(BuildContext context, ThemeData theme) {
     return Container(
-      width: Screens.width(context),
+      width: Screens.width(context)*0.5,
       // height: Screens.bodyheight(context),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -4300,7 +4300,7 @@ await context.read<OrderTabController>(). callcustomerapi();
                 child: Container(
                   padding: EdgeInsets.symmetric(
                       horizontal: Screens.width(context) * 0.015),
-                  width: Screens.width(context) * 0.5,
+                  width: Screens.width(context) * 0.3,
                   height: Screens.bodyheight(context) * 0.05,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
@@ -4309,7 +4309,7 @@ await context.read<OrderTabController>(). callcustomerapi();
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: Screens.width(context) * 0.3,
+                        width: Screens.width(context) * 0.1,
                         // color: Colors.red,
                         child: Text(
                           context

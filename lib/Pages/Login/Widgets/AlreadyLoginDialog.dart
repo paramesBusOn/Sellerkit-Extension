@@ -43,7 +43,7 @@ class ShowSearchDialogState extends State<AlreadyLoginDialogbox> {
   }
 
   getmesg() {
-    log("widget.msg::"+widget.msg.toString());
+    log("widget.msg::" + widget.msg.toString());
     if (widget.msg!.isNotEmpty) {
       setState(() {
         loginmessage = widget.msg.toString();
@@ -63,21 +63,18 @@ class ShowSearchDialogState extends State<AlreadyLoginDialogbox> {
     String? fcm2 = await HelperFunctions.getFCMTokenSharedPreference();
     String? deviceID = await HelperFunctions.getDeviceIDSharedPreference();
     String? passsword = await HelperFunctions.getPasswordSharedPreference();
-if (deviceID == null){
-   
-    deviceID = await Config.getdeviceId();
-      print("deviceID"+deviceID.toString());
-       await   HelperFunctions.saveDeviceIDSharedPreference(deviceID!);
-       
- }
-    LoginVerificationApi.getData(
-            fcm2, deviceID, widget.customerId, 2, '${widget.userCode}','${widget.password}')
+    if (deviceID == null) {
+      deviceID = await Config.getdeviceId();
+      print("deviceID" + deviceID.toString());
+      await HelperFunctions.saveDeviceIDSharedPreference(deviceID!);
+    }
+    LoginVerificationApi.getData(fcm2, deviceID, widget.customerId, 2,
+            '${widget.userCode}', '${widget.password}')
         .then((value) async {
       if (value.stcode! >= 200 && value.stcode! <= 210) {
         if (value.status == true) {
-         
           Navigator.pop(context);
-            validateFinal(context);
+          validateFinal(context);
         } else {
           setState(() {
             progress = false;
@@ -87,7 +84,8 @@ if (deviceID == null){
               context: context,
               builder: (_) {
                 return AlreadyLoginDialogbox(
-                  errormsg: '${value.message} ${value.stcode} ${value.datalist!.devicename}',
+                  errormsg:
+                      '${value.message} ${value.stcode} ${value.datalist!.devicename}',
                   msg: '',
                   customerId: widget.customerId,
                   userCode: '${widget.userCode}',
@@ -157,9 +155,9 @@ if (deviceID == null){
     postLoginData.username = widget.userCode;
     postLoginData.password = '${widget.password}';
     ConstantValues.tenetID = widget.customerId;
-     String? model=await  Config.getdeviceModel() ;
-    String? brand=await  Config.getdeviceBrand() ;
-postLoginData. devicename='${brand} ${model}';
+    String? model = await Config.getdeviceModel();
+    String? brand = await Config.getdeviceBrand();
+    postLoginData.devicename = '${brand} ${model}';
 
     await LoginAPi.getData(postLoginData).then((value) async {
       if (value.resCode! >= 200 && value.resCode! <= 200) {
@@ -170,7 +168,7 @@ postLoginData. devicename='${brand} ${model}';
             widget.errormsg = '';
             ConstantValues.userNamePM = widget.userCode;
           });
-await HelperFunctions.saveTokenSharedPreference(value.token!);
+          await HelperFunctions.saveTokenSharedPreference(value.token!);
           await HelperFunctions.saveUserName(widget.userCode.toString());
           await HelperFunctions.saveLicenseKeySharedPreference(
               value.data!.licenseKey);
@@ -184,7 +182,7 @@ await HelperFunctions.saveTokenSharedPreference(value.token!);
           ConstantValues.UserId = value.data!.UserID;
           ConstantValues.Usercode = value.data!.userCode;
 
-        ConstantValues.storeid = int.parse(value.data!.storeid.toString());
+          ConstantValues.storeid = int.parse(value.data!.storeid.toString());
           ConstantValues.Storecode = value.data!.storecode.toString();
           await HelperFunctions.saveUserLoggedInSharedPreference(true);
           await HelperFunctions.savePasswordSharedPreference(
@@ -227,26 +225,26 @@ await HelperFunctions.saveTokenSharedPreference(value.token!);
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final width=Screens.width(context)/2;
     return AlertDialog(
       content: Container(
-        width: Screens.width(context),
+        width:width,
         // height: Screens.bodyheight(context) * 0.2,
         child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             progress == true
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : Column(
-                   
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                              width: Screens.width(context) * 0.55,
+                              width: width * 0.55,
                               // color: Colors.amber,
                               child: Text(
                                 "${loginmessage}",
@@ -265,8 +263,7 @@ await HelperFunctions.saveTokenSharedPreference(value.token!);
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                           
-                            width: Screens.width(context) * 0.3,
+                            width: width * 0.3,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: theme.primaryColor,

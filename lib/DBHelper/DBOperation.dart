@@ -19,6 +19,7 @@ import 'package:sellerkit/DBModel/testdbmodel2.dart';
 import 'package:sellerkit/Models/OutStandingModel/outstandingmodel.dart';
 import 'package:sellerkit/Models/PostQueryModel/EnquiriesModel/EnquiriesModel.dart';
 import 'package:sellerkit/Models/PostQueryModel/EnquiriesModel/OrderTypeModel.dart';
+import 'package:sellerkit/Models/PostQueryModel/EnquiriesModel/SalesTypeModel.dart';
 import 'package:sellerkit/Models/PostQueryModel/EnquiriesModel/levelofinterestModel.dart';
 import 'package:sellerkit/Models/PostQueryModel/LeadsCheckListModel/GetAllLeadModel.dart';
 import 'package:sellerkit/Models/PostQueryModel/OrdersCheckListModel/GetAllOrderModel.dart';
@@ -2338,6 +2339,22 @@ SELECT * FROM OrderType;
 
     return List.generate(result.length, (i) {
       return OrderTypeData(
+        Code: result[i]['Code'].toString(),
+        Name: result[i]['Name'].toString(),
+      );
+    });
+  }
+  
+  static Future<List<SalesTypeData>> getordertypeDataSales(Database db) async {
+    final List<Map<String, Object?>> result = await db.rawQuery('''
+SELECT * FROM OrderType;
+''');
+
+    // log("Saved AllocATE: " + result.toList().toString());
+    // log("Saved AllocATE length: " + result.length.toString());
+
+    return List.generate(result.length, (i) {
+      return SalesTypeData(
         Code: result[i]['Code'].toString(),
         Name: result[i]['Name'].toString(),
       );

@@ -35,6 +35,8 @@ class ConstantRoutes {
   static String leads = "/Leads";
   static String leadstab = "/LeadsTab";
   static String ordertab = "/OrderTab";
+  static String salesinvoive = "/SalesInvoice";
+
   static String setting = "/Setting";
   static String ordernew = "/ordernew";
   static String newEnq = "/NewEnq";

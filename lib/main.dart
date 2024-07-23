@@ -48,6 +48,8 @@ import 'package:sellerkit/Controller/OpenLeadController/OpenLeadController.dart'
 import 'package:sellerkit/Controller/OutStandingController/OutStandingController.dart';
 import 'package:sellerkit/Controller/QuotationController/newquotecontroller.dart';
 import 'package:sellerkit/Controller/QuotationController/tabquotescontroller.dart';
+import 'package:sellerkit/Controller/SalesController/SalesNewController.dart';
+import 'package:sellerkit/Controller/SalesController/TabSalesController.dart';
 import 'package:sellerkit/Controller/SettlementController/SettlementController.dart';
 import 'package:sellerkit/Controller/SiteInController/SiteInController.dart';
 import 'package:sellerkit/Controller/SiteOutController/SiteOutController.dart';
@@ -85,7 +87,6 @@ import 'Pages/Configuration/ConfigurationPage.dart';
 import 'Services/LocalNotification/LocalNotification.dart';
 import 'Themes/theme_manager.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
-import 'Constant/flutter_background_service_utils.dart';
 
 // Database? db;
 @pragma('vm:entry-point')
@@ -225,12 +226,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await DBOperation.truncateQuotFilter(db);
     await DBOperation.truncustomerMaster(db);
     await DBOperation.truncareItemMaster(db);
-     await DBOperation.truncareoutstandingmaste(db);
-      await DBOperation.truncareoutstandingline(db);
+    await DBOperation.truncareoutstandingmaste(db);
+    await DBOperation.truncareoutstandingline(db);
     await DBOperation.truncareEnqType(db);
     await DBOperation.truncarelevelofType(db);
     await DBOperation.truncareorderType(db);
-    
     await DBOperation.truncareCusTagType(db);
     await DBOperation.trunstateMaster(db);
     await DBOperation.truncareEnqReffers(db);
@@ -705,10 +705,8 @@ refreshData() async {
   print("getUrl2:" + getUrl2.toString());
   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   // print("URL1:" + ConstantValues.urlvalue.toString());
-
- 
   PostLoginData postLoginData = new PostLoginData();
-  Url.queryApi = 'http://${getUrl2.toString()}/api/';
+  Url.queryApi = '${getUrl2.toString()}/api/';
 
   print('ItemMaster-CustomerMasterInsert');
   ItemMasterApiNew itemMasterApiNew = ItemMasterApiNew();
@@ -720,12 +718,10 @@ refreshData() async {
   String? passsword = await HelperFunctions.getPasswordSharedPreference();
   ConstantValues.tenetID =
       (await HelperFunctions.getTenetIDSharedPreference()).toString();
-
   bool? isLoggedIn = await HelperFunctions.getUserLoggedInSharedPreference();
   token = await HelperFunctions.getFCMTokenSharedPreference();
   // log("FCM Token: $token");
   deviceID = await HelperFunctions.getDeviceIDSharedPreference();
-
   // await HelperFunctions.saveFCMTokenSharedPreference(token);
   // log("licenseKey:::" + deviceID.toString());
   // //  String? fcmToken = await HelperFunctions.getFCMTokenSharedPreference();
@@ -736,9 +732,8 @@ refreshData() async {
   postLoginData.fcmToken = token;
   postLoginData.password = passsword;
   String? model=await  Config.getdeviceModel() ;
-    String? brand=await  Config.getdeviceBrand() ;
-postLoginData. devicename='${brand} ${model}';
-
+  String? brand=await  Config.getdeviceBrand() ;
+  postLoginData. devicename='$brand $model';
   await LoginAPi.getData(postLoginData).then((value) async {
     // log("login resocde:: ${value.resCode}");
 
@@ -1435,6 +1430,10 @@ void didChangeAppLifecycleState(AppLifecycleState state){
         ChangeNotifierProvider(create: (_) => tabpriceController()),
         ChangeNotifierProvider(create: (_) => EarningController ()),
         ChangeNotifierProvider(create: (_) => ReportsController()),
+                ChangeNotifierProvider(create: (_) => SalesNewController()),
+                ChangeNotifierProvider(create: (_) => SalesTabController()),
+
+
   ],
       child: Consumer<ThemeManager>(builder: (context, themes, Widget? child) {
         return GetMaterialApp(

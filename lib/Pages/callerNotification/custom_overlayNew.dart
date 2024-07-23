@@ -1209,8 +1209,8 @@ isshowEnq=false;
     await getdbmodel();
      String? getUrl = await HelperFunctions.getHostDSP()??geturlnew;
            log("getUrlgetUrl222::"+getUrl.toString());
-        Utils.queryApi = 'http://${getUrl.toString()}/api/';
-        Url.queryApi='http://${getUrl.toString()}/api/';
+        Utils.queryApi = '${getUrl.toString()}/api/';
+        Url.queryApi='${getUrl.toString()}/api/';
      
 String? tokendata=await HelperFunctions. getTokenSharedPreference();
  ConstantValues.token =tokendata.toString();
@@ -1244,8 +1244,8 @@ String? tokendata=await HelperFunctions. getTokenSharedPreference();
 
         String? getUrl = await HelperFunctions.getHostDSP()??geturlnew;
         log("getUrlgetUrl::"+getUrl.toString());
-        Utils.queryApi = 'http://${getUrl.toString()}/api/';
-        Url.queryApi= 'http://${getUrl.toString()}/api/';
+        Utils.queryApi = '${getUrl.toString()}/api/';
+        Url.queryApi= '${getUrl.toString()}/api/';
         log("Utils.queryApi::::+"+Utils.queryApi.toString());
         
 String? tokendata=await HelperFunctions. getTokenSharedPreference();

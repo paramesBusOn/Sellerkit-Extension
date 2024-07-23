@@ -1298,6 +1298,7 @@ class OrderBookNewState extends State<OrderBookNew> {
                                             ]));
                                           })),
                             ])),
+                 
                   ],
                 ),
               ),
@@ -2535,7 +2536,7 @@ class OrderBookNewState extends State<OrderBookNew> {
                 )
               : Container(
                   color: Colors.white,
-                  width: Screens.width(context),
+                  width: Screens.width(context)/2,
                   height: Screens.bodyheight(context),
                   padding: EdgeInsets.symmetric(
                       horizontal: Screens.width(context) * 0.03,
@@ -5420,6 +5421,8 @@ class OrderBookNewState extends State<OrderBookNew> {
                                       ],
                                     ),
                                   ),
+                               
+                               
                                 ],
                               ),
                               Visibility(
